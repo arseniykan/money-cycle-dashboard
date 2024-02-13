@@ -6,7 +6,7 @@ A Plotly Dash app that presents all you need to know about Money Cycle app: game
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-![](https://github.com/ivan-abboud/fifa-worldcup-dashboard/blob/main/demo.gif)
+![](https://github.com/arseniykan/money-cycle-dashboard/blob/main/demo.gif)
 
 
 
