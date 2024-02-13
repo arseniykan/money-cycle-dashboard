@@ -30,7 +30,7 @@ wc_winning_times_card = html.Div(html.Div(className="card", children=[
 
             html.Div(className="card-icon d-flex align-items-center", children=[
                 html.Img(className="img-fluid bx-lg",
-                         src="./assets/images/ic_world_cup.png", style={"width": "8rem"})
+                         src="./assets/images/money_cycle.png", style={"width": "8rem"})
             ]
             )
         ])
@@ -51,13 +51,13 @@ participations_card = html.Div(html.Div(className="card", children=[
                                        style={"font-size": "4.2vw"})
                          ),
                          html.H6(
-                             className="card-text m-0", children=["Participations"], style={"font-size": "1vw"}
+                             className="card-text m-0", children=["Games Played"], style={"font-size": "1vw"}
                          ),
                      ], style={"text-align": "center"}),
 
             html.Div(className="card-icon d-flex align-items-center", children=[
                 html.Img(className="img-fluid bx-lg",
-                         src="./assets/images/ic_stadium.png", style={"width": "8rem"})
+                         src="./assets/images/money.png", style={"width": "8rem"})
             ]
             )
         ])
@@ -79,13 +79,13 @@ matches_count_card = html.Div(html.Div(className="card", children=[
                                        style={"font-size": "4.2vw"})
                          ),
                          html.H6(
-                             className="card-text m-0", children=["Matches"], style={"font-size": "1vw"}
+                             className="card-text m-0", children=["Rounds"], style={"font-size": "1vw"}
                          ),
                      ], style={"text-align": "center"}),
 
             html.Div(className="card-icon d-flex align-items-center", children=[
                 html.Img(className="img-fluid bx-lg",
-                         src="./assets/images/ic_soccer_ball.png", style={"width": "9rem"})
+                         src="./assets/images/dice.png", style={"width": "9rem"})
             ]
             )
         ])
@@ -104,34 +104,37 @@ TeamStatsOverall = dbc.Row(children=[
                          children=[
                              dbc.Select(
                                  id="query-team-select",
-                                 value="Brazil",
+                                 value="Richard Martinez",
                                  options=[
-                                     {"label": l, "value": l} for l in teams.team_name.values if l != "Israel"
+                                     {"label": l, "value": l} for l in u_teams.team_name.values
                                  ],
                                  style={"width": "10rem"}
                              ),
                              html.P(className="card-text mb-1 mt-1 fs-sm",
                                     id="team-code-text",
-                                    children=[f"Team Code: "]),
+                                    children=[f"Player ID: "]),
                              html.P(className="card-text mb-1 fs-sm",
                                     id="team-region-text",
-                                    children=[f"Region:"]),
+                                    children=[f"City:"]),
                              html.P(className="card-text mb-1 fs-sm",
                                     id="team-confederation-text",
-                                    children=[f"Conf: "]),
+                                    children=[f"School: "]),
                              html.A(id="query-team-wiki-link",
                                     target="_blank",
                                     style={"font-size": "0.7rem"})
                          ]),
                 html.Div(className="card-icon d-flex align-items-center w-40 justify-content-center p-1", children=[
-                    dls.Triangle(
-                        html.Img(className="img-fluid bx-lg",
-                                 id="team-flag-main",
-                                 style={
-                                     "width": "2em", "box-shadow": "0 2px 6px 0 rgb(67 89 113 / 20%)"}
-                                 ),
-                        debounce=theme.LOADING_DEBOUNCE
-                    )
+                    # dls.Triangle(
+                    #     html.Img(className="img-fluid bx-lg",
+                    #              id="team-flag-main",
+                    #              style={
+                    #                  "width": "2em", "box-shadow": "0 2px 6px 0 rgb(67 89 113 / 20%)"}
+                    #              ),
+                    #     debounce=theme.LOADING_DEBOUNCE
+                    # )
+                    html.Img(className="img-fluid bx-lg",
+                    src="./assets/images/user.png",
+                    style={"width": "2em", "box-shadow": "0 2px 6px 0 rgb(67 89 113 / 20%)"})
                 ]
                 )
 
@@ -152,7 +155,7 @@ TeamStatsOverall = dbc.Row(children=[
     Output("team-code-text", "children"),
     Output("team-region-text", "children"),
     Output("team-confederation-text", "children"),
-    Output("team-flag-main", "src"),
+    # Output("team-flag-main", "src"),
     Output("query-team-wiki-link", "href"),
     Output("query-team-wiki-link", "children"),
     Output("winning-times-text", "children"),
@@ -164,21 +167,21 @@ TeamStatsOverall = dbc.Row(children=[
 )
 def update_team_select(query_team, teams_df):
     teams_df = pd.read_json(teams_df)
-    team_code = f"Team Code: {teams_df.loc[teams_df.team_name==query_team , 'team_code'].values[0]}"
-    team_region = f"Region: {teams_df.loc[teams_df.team_name==query_team , 'region_name'].values[0]}"
-    team_confederation = f"Confedration: {teams_df.loc[teams_df.team_name==query_team , 'confederation_code'].values[0]}"
+    team_code = f"Player ID: {teams_df.loc[teams_df.team_name==query_team , 'team_code'].values[0]}"
+    team_region = f"City: {teams_df.loc[teams_df.team_name==query_team , 'region_name'].values[0]}"
+    team_confederation = f"School: {teams_df.loc[teams_df.team_name==query_team , 'confederation_code'].values[0]}"
     team_flag = f"./assets/flags/4x3/{query_team}.svg"
     wiki_link = teams_df.loc[teams_df.team_name ==
                              query_team, 'team_wikipedia_link'].values[0]
 
-    matches_count = team_stats.loc[team_stats.team_name ==
+    matches_count = u_team_stats.loc[u_team_stats.team_name ==
                                    query_team]["count_matches"].values[0]
-    winning_times = team_stats.loc[team_stats.team_name ==
+    winning_times = u_team_stats.loc[u_team_stats.team_name ==
                                    query_team]["winning_times"].values[0]
-    participation_count = team_stats.loc[team_stats.team_name ==
+    participation_count = u_team_stats.loc[u_team_stats.team_name ==
                                          query_team]["participations"].values[0]
 
     winning_years = "- ".join(tours.loc[tours.winner ==
                                         query_team, "year"].values.astype("str"))
 
-    return team_code, team_region, team_confederation, team_flag, wiki_link, f"Read More About {query_team}", winning_times, winning_years, participation_count, matches_count
+    return team_code, team_region, team_confederation, wiki_link, f"{query_team}'s profile", winning_times, winning_years, participation_count, matches_count

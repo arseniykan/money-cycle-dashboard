@@ -13,7 +13,7 @@ TeamTopScorers = html.Div(className="card-chart-container col-lg-4 md-6 sm-12",
                               html.Div(
                                   className="card-chart",
                                   children=[
-                                      html.H4("Team Top Scorers",
+                                      html.H4("Highest earning tools",
                                               className="card-header card-m-0 me-2 pb-3"),
                                       dls.Triangle(
                                           id="team-top-scorers",

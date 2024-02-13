@@ -16,7 +16,7 @@ from pages.worldcup_analysis import worldcup_page_content
 from pages.team_analysis import team_analysis_page_content
 from pages.about import about_page_content
 import glob
-from utils.consts import team_stats
+from utils.consts import team_stats, u_team_stats
 
 
 # RAW
@@ -28,26 +28,31 @@ DATA_FOLDER = os.path.join(ROOT_FOLDER, "data/")
 ASSETS_FOLDER = os.path.join(SRC_FOLDER, "assets")
 
 # Processed
-teams = pd.read_csv(os.path.join(DATA_FOLDER, "processed/teams.csv"))
+teams = pd.read_csv(os.path.join(DATA_FOLDER, "processed/updated_teams.csv"))
 bookings = pd.read_csv(os.path.join(
     ROOT_FOLDER, "data/processed/bookings.csv"))
 award_winners = pd.read_csv(os.path.join(
     ROOT_FOLDER, "data/processed/award_winners.csv"))
 data = pd.read_csv(os.path.join(
     ROOT_FOLDER, "data/processed/qualified_teams.csv"))
+u_data = pd.read_csv(os.path.join(
+    ROOT_FOLDER, "data/processed/updated_qualified_teams.csv"))
 goals = pd.read_csv(os.path.join(ROOT_FOLDER, "data/processed/goals.csv"))
+u_goals = pd.read_csv(os.path.join(ROOT_FOLDER, "data/processed/updated_goals.csv"))
 tours = pd.read_csv(os.path.join(
     ROOT_FOLDER, "data/processed/tournaments.csv"))
 matches = pd.read_csv(os.path.join(ROOT_FOLDER, "data/processed/matches.csv"))
 
+actions = pd.read_csv(os.path.join(ROOT_FOLDER, "data/processed/game_user_actions_expanded_final.csv"))
 
-data_store = html.Div([dcc.Store(id="qualified-teams-df", data=data.to_json()),
-                       dcc.Store(id="goals-df", data=goals.to_json()),
+
+data_store = html.Div([dcc.Store(id="qualified-teams-df", data=u_data.to_json()),
+                       dcc.Store(id="goals-df", data=u_goals.to_json()),
                        dcc.Store(id="matches-df", data=matches.to_json()),
                        dcc.Store(id="tours-df", data=tours.to_json()),
                        dcc.Store(id="teams-df", data=teams.to_json()),
                        dcc.Store(id="bookings-df", data=bookings.to_json()),
-                       dcc.Store(id="team-stats-df", data=team_stats.to_json())])
+                       dcc.Store(id="team-stats-df", data=u_team_stats.to_json())])
 
 external_style_sheet = glob.glob(os.path.join(
     ASSETS_FOLDER, "bootstrap/css") + "/*.css")
@@ -57,7 +62,7 @@ external_style_sheet += glob.glob(os.path.join(ASSETS_FOLDER,
                                   "fonts") + "/*.css")
 
 
-app = dash.Dash(__name__, title="WorldCup Dashboard",
+app = dash.Dash(__name__, title="Money Cycle Dashboard",
                 external_stylesheets=[
                     dbc.themes.BOOTSTRAP] + external_style_sheet,
                 suppress_callback_exceptions=True,

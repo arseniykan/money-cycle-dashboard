@@ -10,8 +10,8 @@ from dash import callback
 
 
 RivalSectionTitle = html.Div([
-    html.H2([html.Span("See How "), html.Span(id="rival-section-title",
-            style={"color": theme.COLOR_PALLETE[0], }), html.Span(" Performed against other teams in WorldCup ")])
+    html.H2([html.Span("See How "), html.Span(id="rival-team-select",
+            style={"color": theme.COLOR_PALLETE[0], }), html.Span(" Performed in the last game played")])
 ], style={"margin-top": "3rem"})
 
 

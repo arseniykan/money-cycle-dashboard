@@ -3,7 +3,7 @@ import pandas as pd
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 import utils.theme as theme
-from utils.consts import tours, goals, award_winners
+from utils.consts import u_tours, tours, goals, award_winners, actions
 import numpy as np
 
 
@@ -29,9 +29,9 @@ def create_card(fig, class_name, title="Title"):
 
 
 WCWinnersBar = create_card(class_name="card-chart-container col-lg-3 col-md-12 col-sm-12",
-                           title="World Cup Holders",
+                           title="Overall Ranking",
                            fig=px.bar(
-                               tours.groupby("winner", as_index=False).size(),
+                               u_tours.groupby("winner", as_index=False).size(),
                                x="winner",
                                y="size",
                                height=theme.MAX_CHART_HEIGHT,
@@ -43,18 +43,31 @@ WCWinnersBar = create_card(class_name="card-chart-container col-lg-3 col-md-12 c
                                           ).update_layout(margin={"r": 20, "l": 30}))
 
 
-tmp_tours = tours
-tmp_tours["year"] = tours["year"].astype("str")
-HostsCountriesBar = create_card(class_name="card-chart-container col-lg-5 col-md-12 col-sm-12",
-                                title="World Cup Hosts",
-                                fig=px.bar(tmp_tours.groupby("host_country", as_index=False).agg({"year": " - ".join, "winner": "size"}),
-                                           x="host_country", y="winner", text="year",
-                                           height=theme.MAX_CHART_HEIGHT,
-                                           color_discrete_sequence=theme.COLOR_PALLETE,
-                                           labels={
-                                               "host_country": "Host Country", "winner": "Hosting Times"}
-                                           ).update_xaxes(categoryorder="total descending",
-                                                          ).update_layout(margin={"r": 20, "t": 10}))
+tmp_tours = u_tours
+tmp_tours["year"] = u_tours["year"].astype("str")
+
+actions_df = actions
+# Define your classification logic
+risky_actions = ['Investment', 'Lottery']
+safe_actions = ['Deposit (Saving)', 'Loan']
+actions_df['Decision Type'] = actions_df['Action Detail'].apply(lambda x: 'Risky' if x in risky_actions else ('Safe' if x in safe_actions else 'Other'))
+
+# Calculate counts
+decision_counts = actions_df['Decision Type'].value_counts()
+decision_counts = decision_counts[decision_counts.index.isin(['Risky', 'Safe'])]
+
+AggressiveConservative = create_card(class_name="card-chart-container col-lg-5 col-md-12 col-sm-12",
+                                title="Risk Assessment",
+                                fig = px.bar(
+                                x=decision_counts.index,
+                                y=decision_counts.values,
+                                labels={'x': 'Decision Type', 'y': 'Count'},
+                                color=decision_counts.index,
+                                #color_discrete_map={'Risky': 'red', 'Safe': 'green'},
+                                color_discrete_sequence=theme.COLOR_PALLETE,
+                                height=350
+                            ).update_layout(showlegend=False)
+                                                          )
 
 
 CountriesTotalGoalsBar = create_card(class_name="card-chart-container col-lg-12 col-md-12 col-sm-12",

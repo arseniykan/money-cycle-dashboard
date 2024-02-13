@@ -10,7 +10,7 @@ yellow_cards = html.Div(className="col-md-12 col-lg-12 mb-md-0 mb-4",
                                 html.Div(className="d-flex justify-content-between", children=[
 
                                     html.Div(className="card-info w-100",
-                                         children=[html.Small(className="card-text", children=["Yellow Cards"]),
+                                         children=[html.Small(className="card-text", children=["Lucky Draws"]),
                                                    dls.Triangle(
                                                    html.H2(className="mb-2 mt-2 card-title mb-2",
                                                            id="yellow-card-body",
@@ -22,7 +22,7 @@ yellow_cards = html.Div(className="col-md-12 col-lg-12 mb-md-0 mb-4",
 
                                     html.Div(className="card-icon d-flex align-items-center w-50", children=[
                                         html.Img(className="img-fluid bx-lg",
-                                             src="./assets/images/yellow-card.png", style={"width": "6rem",
+                                             src="./assets/images/lottery.png", style={"width": "6rem",
                                                                                            })
                                     ]
                                     )
@@ -40,7 +40,7 @@ red_cards = html.Div(className="col-md-12 col-lg-12 mb-md-0 mb-4",
                              html.Div(className="d-flex justify-content-between", children=[
 
                                  html.Div(className="card-info w-100",
-                                          children=[html.Small(className="card-text", children=["Red Cards"]),
+                                          children=[html.Small(className="card-text", children=["Loans Taken"]),
                                                     dls.Triangle(
                                               html.H2(className="mb-2 mt-2 card-title mb-2",
                                                       id="red-card-body",
@@ -52,7 +52,7 @@ red_cards = html.Div(className="col-md-12 col-lg-12 mb-md-0 mb-4",
 
                                  html.Div(className="card-icon d-flex align-items-center w-50", children=[
                                         html.Img(className="img-fluid bx-lg",
-                                                 src="./assets/images/red-card.png", style={"width": "6rem",
+                                                 src="./assets/images/debt.png", style={"width": "6rem",
                                                                                             })
                                         ]
                                  )
@@ -89,5 +89,5 @@ def update_team_bookings(query_team, team_stats_df):
     matches_count = team_stats_df.loc[team_stats_df.team_name ==
                                       query_team]["count_matches"].values[0]
 
-    matches_count_text = f"In {matches_count} Matches"
+    matches_count_text = f"In {matches_count} Rounds"
     return yellow_card_counts, matches_count_text, red_card_counts, matches_count_text

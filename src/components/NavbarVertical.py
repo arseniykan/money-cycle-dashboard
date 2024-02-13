@@ -5,16 +5,16 @@ sidebar = html.Div(
     [
         html.Div(
             [
-                html.Img(src="./assets/images/ic_world_cup.png", style={"width": "3rem"}),
-                html.H4("WorldCup", className="m-0"),
+                html.Img(src="./assets/images/story_dx.png", style={"width": "3rem"}),
+                html.H4("Money Cycle", className="m-0", style={"font-size": "1.0rem"}),
             ],
             className="sidebar-header",
         ),
         html.Hr(),
         dbc.Nav(
             [
-                dbc.NavLink(
-                    [html.I(className="tf-icons bx bx-trophy fas fa-home"), html.Span("Tournaments" , className="me-2")],
+                dbc.NavLink(    
+                    [html.I(className="tf-icons bx bx-trophy fas fa-home"), html.Span("Main" , className="me-2")],
                     href="/",
                     active="exact",
                     className="pe-3"
@@ -22,7 +22,7 @@ sidebar = html.Div(
                 dbc.NavLink(
                     [
                         html.I(className="menu-icon tf-icons bx bx-group"),
-                        html.Span("Teams"),
+                        html.Span("Players"),
                     ],
                     href="/team-analysis",
                     active="exact",
