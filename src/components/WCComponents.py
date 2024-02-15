@@ -70,32 +70,10 @@ AggressiveConservative = create_card(class_name="card-chart-container col-lg-5 c
                                                           )
 
 
-CountriesTotalGoalsBar = create_card(class_name="card-chart-container col-lg-12 col-md-12 col-sm-12",
-                                     title="Countries Goals in World Cups (Top 20)",
-                                     fig=px.bar(goals.groupby("team_name", as_index=False).size().sort_values(by="size", ascending=False)[:20],
-                                                x="team_name", y="size", text_auto=True, color_discrete_sequence=theme.COLOR_PALLETE,
-                                                labels={"team_name": "Country", "size": "Goals Count"}, height=theme.MAX_CHART_HEIGHT,
-                                                ).update_layout(margin={"r": 20})
-                                     )
 
 
-TotalAttendanceLine = create_card(class_name="card-chart-container col-lg-7 col-md-12 col-sm-12",
-                                  title="Total and Average Attendance",
-                                  fig=px.line(tours.rename(columns={"total_attendance": "Total", "avg_attendance": "Avg."}),
-                                              x="year", y=["Total", "Avg."],
-                                              labels={
-                                                  "year": "Year", "value": "", "variable": ""},
-                                              color_discrete_sequence=theme.COLOR_PALLETE,
-                                              height=theme.MAX_CHART_HEIGHT,).update_xaxes(type='category'))
 
-VenuesAndCitiesBar = create_card(class_name="card-chart-container col-lg-5 col-md-12 col-sm-12",
-                                 title="Cities and Venues",
-                                 fig=px.histogram(tours, x=tours["year"],
-                                                  y=["cities", "venues"],
-                                                  barmode="group", labels={"year": "Year", "variable": ""},
-                                                  color_discrete_sequence=theme.COLOR_PALLETE,
-                                                  height=theme.MAX_CHART_HEIGHT,
-                                                  ).update_layout(yaxis_title="").update_xaxes(type='category'))
+
 
 
 top_players_df = goals.groupby(["family_name", "given_name"], as_index=False).size(
@@ -105,15 +83,15 @@ top_players_df.loc[top_players_df["given_name"]
 top_players_df["player_full_name"] = top_players_df["given_name"] + \
     " " + top_players_df["family_name"]
 
-TopWcScorersBar = create_card(class_name="card-chart-container col-lg-5 col-md-12 col-sm-12",
-                              title="Top Scorers in World Cups",
-                              fig=px.bar(top_players_df.loc[top_players_df["size"] > 6],
-                                         y="player_full_name", x="size",
-                                         labels={"player_full_name": "",
-                                                 "size": "Goals Count"},
-                                         color_discrete_sequence=theme.COLOR_PALLETE,
-                                         height=795,
-                                         orientation="h").update_yaxes(categoryorder="total ascending"))
+# TopWcScorersBar = create_card(class_name="card-chart-container col-lg-5 col-md-12 col-sm-12",
+#                               title="Top Scorers in World Cups",
+#                               fig=px.bar(top_players_df.loc[top_players_df["size"] > 6],
+#                                          y="player_full_name", x="size",
+#                                          labels={"player_full_name": "",
+#                                                  "size": "Goals Count"},
+#                                          color_discrete_sequence=theme.COLOR_PALLETE,
+#                                          height=795,
+#                                          orientation="h").update_yaxes(categoryorder="total ascending"))
 
 PenaltiesCountPerTour = create_card(class_name="card-chart-container col-lg-12 col-md-12 col-sm-12",
                                     title="Penalties Count Per Tour",
@@ -131,17 +109,6 @@ GoalsCountPerTourLine = create_card(class_name="card-chart-container col-lg-12 c
                                         height=theme.MAX_CHART_HEIGHT,
                                         color_discrete_sequence=theme.COLOR_PALLETE,))
 
-CountriesAwardsBar = create_card(class_name="card-chart-container col-lg-12 col-md-12 col-sm-12",
-                                 title="Countries Total Awards",
-                                 fig=px.histogram(award_winners,
-                                                  x="team_name",
-                                                  labels={
-                                                      "team_name": "Team Name"},
-                                                  color_discrete_sequence=theme.COLOR_PALLETE,
-                                                  height=theme.MAX_CHART_HEIGHT,
-                                                  ).update_xaxes(
-                                     categoryorder="total descending"
-                                 ).update_layout(yaxis_title="Total Awards"))
 
 MostAttendedMatchesBar = create_card(class_name="card-chart-container col-lg-5 col-md-12 col-sm-12",
                                      title="Most Attended Match In Each Tour",
@@ -170,25 +137,3 @@ GoalsCountPerMinute = create_card(class_name="card-chart-container col-lg-12 col
                                               height=theme.MAX_CHART_HEIGHT)
                                   )
 
-MatchesCountBar = create_card(class_name="card-chart-container col-lg-7 col-md-12 col-sm-12",
-                              title="Matches Count in Each Tour",
-                              fig=px.bar(tours, x="year", y="matches", color_discrete_sequence=theme.COLOR_PALLETE,
-                                         height=theme.MAX_CHART_HEIGHT,
-                                         text_auto=True,
-                                         labels={
-                                             "matches": "Matches Count", "year": ""}
-                                         ).update_xaxes(type="category",
-                                                        ).update_layout(margin={"r": 30}))
-
-ToursTimeline = create_card(class_name="card-chart-container col-lg-5 col-md-12 col-sm-12",
-                            title="WorldCups Timeline",
-                            fig=px.timeline(tours, x_start=tours["start_date"].apply(lambda x: "2000" + x[4:]),
-                                            x_end=tours["end_date"].apply(lambda x: "2000" + x[4:]), y=tours["year"].astype("str"),
-                                            color=(pd.to_datetime(
-                                                   tours['end_date'])-pd.to_datetime(tours['start_date'])).apply(lambda x: x.days),
-                                            labels={
-                                "y": "Year", "color": "Days", "x_start": "Start Date", "x_end": "End Date"},
-                                height=theme.MAX_CHART_HEIGHT,
-                                hover_data=["host_country"],
-                                color_continuous_scale=theme.COLOR_PALLETE[:2],
-                            ))

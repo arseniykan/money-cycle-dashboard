@@ -14,7 +14,7 @@ bookings = pd.read_csv(os.path.join(DATA_FOLDER, "processed/bookings.csv"))
 award_winners = pd.read_csv(os.path.join(
     DATA_FOLDER, "processed/award_winners.csv"))
 data = pd.read_csv(os.path.join(DATA_FOLDER, "processed/qualified_teams.csv"))
-goals = pd.read_csv(os.path.join(DATA_FOLDER, "processed/goals.csv"))
+goals = pd.read_csv(os.path.join(DATA_FOLDER, "processed/updated_goals.csv"))
 tours = pd.read_csv(os.path.join(DATA_FOLDER, "processed/tournaments.csv"))
 u_tours = pd.read_csv(os.path.join(DATA_FOLDER, "processed/updated_tournaments.csv"))
 matches = pd.read_csv(os.path.join(DATA_FOLDER, "processed/matches.csv"))
@@ -26,4 +26,4 @@ actions = pd.read_csv(os.path.join(DATA_FOLDER, "processed/game_user_actions_exp
 
 GITHUB_PROFILE = "https://github.com/arseniykan"
 FACEBOOK_PROFILE = "https://www.facebook.com/arseniykan3"
-LINKEDIN_PROFILE = "https://github.com/arseniykan"
+LINKEDIN_PROFILE = "https://www.linkedin.com/in/arseniykan/"

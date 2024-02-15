@@ -8,7 +8,7 @@ from dash.dependencies import Input, Output, State
 import dash_loading_spinners as dls
 from dash import callback
 
-TeamRankingTable = html.Div(className="col-md-12 col-lg-4 mb-md-0 mb-4 card-chart-container", children=[
+LatestResults = html.Div(className="col-md-12 col-lg-4 mb-md-0 mb-4 card-chart-container", children=[
     html.Div(className="card", children=[
         html.Div(className="card-header card-m-0 me-2 pb-3", children=[
             html.H4("Latest Results",
